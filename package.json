@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "init": "^0.1.2"
+    "init": "^0.1.2",
+    "inquirer": "^7.3.3"
   },
   "devDependencies": {},
   "scripts": {
