@@ -11,5 +11,25 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-    runSearch();
+    // runSearch();
   });
+
+  function promptUser(){
+      inquirer.prompt({
+          type: "list",
+          message: "What would you like to do?",
+          name: "userChoices",
+          choices: [
+              "View all Employees",
+              "View all Employees by Department",
+              "View all Employees by Manager",
+              "Add Employee",
+              "Add Role",
+              "Add Department",
+              "View All Roles",
+              "View All Deparments",
+              "Exit",
+          ]
+
+      })
+  }
