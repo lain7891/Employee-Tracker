@@ -28,7 +28,7 @@ connection.connect(function(err) {
               "Add Role",
               "Add Department",
               "View All Roles",
-              "View All Deparments",
+              "View All Departments",
               "Exit",
           ]
 
@@ -42,7 +42,7 @@ connection.connect(function(err) {
                   employeesByDepartment();
                   break;
               case "View all employees by Manager":
-                  employeesByManager;
+                  employeesByManager();
                   break;
               case "Add Employee":
                   addEmployee();
@@ -65,3 +65,4 @@ connection.connect(function(err) {
       })
   }
   promptUser();
+
