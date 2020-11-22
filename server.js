@@ -31,5 +31,8 @@ connection.connect(function(err) {
               "Exit",
           ]
 
+      }).then(response => {
+          console.log(response)
       })
   }
+  promptUser();
