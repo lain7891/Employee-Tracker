@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
+const { allowedNodeEnvironmentFlags, exit } = require("process");
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -33,6 +34,34 @@ connection.connect(function(err) {
 
       }).then(response => {
           console.log(response)
+          switch(response.userChoice){
+              case "View all Employees":
+                  allEmployees();
+                  break;
+              case "View all employees by Department":
+                  employeesByDepartment();
+                  break;
+              case "View all employees by Manager":
+                  employeesByManager;
+                  break;
+              case "Add Employee":
+                  addEmployee();
+                  break;
+              case "Add Role":
+                  addRole();
+                  break;
+              case "Add Department":
+                  addDepartment();
+                  break;
+              case "View all roles":
+                  allRoles();
+                  break;
+              case "View all departments":
+                  allDepartments();
+                  break;
+              case "Exit":
+                  exit();
+          }
       })
   }
   promptUser();
