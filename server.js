@@ -64,5 +64,22 @@ connection.connect(function(err) {
           }
       })
   }
-  promptUser();
+
+promptUser();
+
+function allEmployees(){
+connection.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, name AS Department FROM employee LEFT JOIN role ON employee.role_id = role_id LEFT JOIN department ON role.department_id = department_id;", 
+(err, res) => {
+    if(err) throw err;
+    console.table(res);
+    promptUser();
+});}
+
+function employeesByDepartment(){
+    connection.query("", 
+    (err, res) => {
+        if(err) throw err;
+        console.table(res);
+        promptUser();
+    });}
 
