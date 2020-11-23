@@ -1,85 +1,126 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const { allowedNodeEnvironmentFlags, exit } = require("process");
+const { exit } = require("process");
 
 const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
   password: "Lain7891!",
-  database: "employee_trackerDB"
+  database: "employee_trackerDB",
 });
 
-connection.connect(function(err) {
-    if (err) throw err;
-    // runSearch();
-  });
+connection.connect(function (err) {
+  if (err) throw err;
+  // runSearch();
+});
 
-  function promptUser(){
-      inquirer.prompt({
-          type: "list",
-          message: "What would you like to do?",
-          name: "userChoices",
-          choices: [
-              "View all Employees",
-              "View all Employees by Department",
-              "View all Employees by Manager",
-              "Add Employee",
-              "Add Role",
-              "Add Department",
-              "View All Roles",
-              "View All Departments",
-              "Exit",
-          ]
-
-      }).then(response => {
-          console.log(response)
-          switch(response.userChoice){
-              case "View all Employees":
-                  allEmployees();
-                  break;
-              case "View all employees by Department":
-                  employeesByDepartment();
-                  break;
-              case "View all employees by Manager":
-                  employeesByManager();
-                  break;
-              case "Add Employee":
-                  addEmployee();
-                  break;
-              case "Add Role":
-                  addRole();
-                  break;
-              case "Add Department":
-                  addDepartment();
-                  break;
-              case "View all roles":
-                  allRoles();
-                  break;
-              case "View all departments":
-                  allDepartments();
-                  break;
-              case "Exit":
-                  exit();
-          }
-      })
-  }
+function promptUser() {
+  inquirer
+    .prompt({
+      type: "list",
+      message: "What would you like to do?",
+      name: "userChoices",
+      choices: [
+        "View all Employees",
+        "View all Employees by Department",
+        "View all Employees by Manager",
+        "Add Employee",
+        "Add Role",
+        "Add Department",
+        "View All Roles",
+        "View All Departments",
+        "Exit",
+      ],
+    })
+    .then((response) => {
+      console.log(response);
+      switch (response.userChoices) {
+        case "View all Employees":
+          allEmployees();
+          break;
+        case "View all Employees by Department":
+          employeesByDepartment();
+          break;
+        case "View all Employees by Manager":
+          employeesByManager();
+          break;
+        case "Add Employee":
+          addEmployee();
+          break;
+        case "Add Role":
+          addRole();
+          break;
+        case "Add Department":
+          addDepartment();
+          break;
+        case "View all roles":
+          allRoles();
+          break;
+        case "View All Departments":
+          allDepartments();
+          break;
+        case "Exit":
+          exit();
+      }
+    });
+}
 
 promptUser();
 
-function allEmployees(){
-connection.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, name AS Department FROM employee LEFT JOIN role ON employee.role_id = role_id LEFT JOIN department ON role.department_id = department_id;", 
-(err, res) => {
-    if(err) throw err;
+function allEmployees() {
+  let query =
+    "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name AS department FROM employee  LEFT JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id";
+  connection.query(query, (err, res) => {
+    if (err) throw err;
     console.table(res);
     promptUser();
-});}
+  });
+}
 
-function employeesByDepartment(){
-    connection.query("", 
-    (err, res) => {
-        if(err) throw err;
-        console.table(res);
-        promptUser();
-    });}
+function employeesByDepartment(departmentId) {
+  connection.query("SELECT * FROM department;", (err, res) => {
+    if (err) throw err;
+    console.log(res);
+    const choices = res.map(row => ({
+        value: row.id,
+        name: row.name,
+    }));
+        inquirer
+      .prompt({
+        type: "list",
+        message: "Which department do you want to look at?",
+        name: "department",
+        choices: choices,
+      })
+      .then(function (answer) {
+          console.log(answer);
+        let query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary 
+    FROM employee
+    LEFT JOIN role ON employee.role_id = role.id
+    INNER JOIN department ON role.department_id = department.id
+    WHERE department.id = ${answer.department}`;
+        connection.query(query, (err, res) => {
+          if (err) throw err;
+          console.table(res);
+          promptUser();
+        });
+      });
+  });
+}
 
+function employeesByManager() {
+  connection.query("", (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+}
+
+function allDepartments() {
+  connection.query("SELECT * FROM department;", (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+}
