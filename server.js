@@ -121,7 +121,13 @@ function employeesByDepartment(departmentId) {
 }
 
 function employeesByManager() {
-  connection.query("", (err, res) => {
+    let query = `SELECT employee.manager_id AS 'Manager ID', manager.first_name, manager.last_name AS 'Manager Name',
+    employee.id AS 'Employee ID', employee.first_name, employee.last_name 'Employee'
+    FROM employee employee
+    INNER JOIN employee manager ON employee.manager_id = manager.id
+    WHERE employee.manager_id IS NOT NULL
+    ORDER BY 'Manager Name';`
+  connection.query(query, (err, res) => {
     if (err) throw err;
     console.table(res);
     promptUser();
