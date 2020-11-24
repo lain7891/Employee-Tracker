@@ -13,3 +13,22 @@ SELECT employee.id, employee.first_name, employee.last_name, role.title, role.sa
 FROM employee 
 LEFT JOIN role ON employee.role_id = role_id 
 LEFT JOIN department ON role.department_id = department_id;
+
+-- Employee's by Department
+SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary 
+FROM employee
+LEFT JOIN role ON employee.role_id = role.id
+INNER JOIN department ON role.department_id = department.id
+WHERE department.id = 1;
+
+-- View all departments 
+SELECT * FROM department;
+
+-- View All Employees by Manager --  
+
+SELECT employee.manager_id AS 'Manager ID', manager.first_name, manager.last_name AS 'Manager Name',
+employee.id AS 'Employee ID', employee.first_name, employee.last_name 'Employee'
+FROM employee employee
+INNER JOIN employee manager ON employee.manager_id = manager.id
+WHERE employee.manager_id IS NOT NULL
+ORDER BY 'Manager Name';

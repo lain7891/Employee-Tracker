@@ -15,15 +15,15 @@ connection.connect(function (err) {
   // runSearch();
 });
 
-var figlet = require('figlet');
- 
-figlet('Employee Tracker!', function(err, data) {
-    if (err) {
-        console.log('Something went wrong...');
-        console.dir(err);
-        return;
-    }
-    console.log(data)
+var figlet = require("figlet");
+
+figlet("Employee Tracker!", function (err, data) {
+  if (err) {
+    console.log("Something went wrong...");
+    console.dir(err);
+    return;
+  }
+  console.log(data);
 });
 
 function promptUser() {
@@ -80,8 +80,7 @@ function promptUser() {
 promptUser();
 
 function allEmployees() {
-  let query =
-    "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name AS department FROM employee  LEFT JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id";
+  let query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, department.name AS department FROM employee  LEFT JOIN role ON employee.role_id = role.id INNER JOIN department ON role.department_id = department.id`;
   connection.query(query, (err, res) => {
     if (err) throw err;
     console.table(res);
@@ -93,11 +92,11 @@ function employeesByDepartment(departmentId) {
   connection.query("SELECT * FROM department;", (err, res) => {
     if (err) throw err;
     console.log(res);
-    const choices = res.map(row => ({
-        value: row.id,
-        name: row.name,
+    const choices = res.map((row) => ({
+      value: row.id,
+      name: row.name,
     }));
-        inquirer
+    inquirer
       .prompt({
         type: "list",
         message: "Which department do you want to look at?",
@@ -105,7 +104,7 @@ function employeesByDepartment(departmentId) {
         choices: choices,
       })
       .then(function (answer) {
-          console.log(answer);
+        console.log(answer);
         let query = `SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary 
     FROM employee
     LEFT JOIN role ON employee.role_id = role.id
@@ -121,12 +120,12 @@ function employeesByDepartment(departmentId) {
 }
 
 function employeesByManager() {
-    let query = `SELECT employee.manager_id AS 'Manager ID', manager.first_name, manager.last_name AS 'Manager Name',
+  let query = `SELECT employee.manager_id AS 'Manager ID', manager.first_name, manager.last_name AS 'Manager Name',
     employee.id AS 'Employee ID', employee.first_name, employee.last_name 'Employee'
     FROM employee employee
     INNER JOIN employee manager ON employee.manager_id = manager.id
     WHERE employee.manager_id IS NOT NULL
-    ORDER BY 'Manager Name';`
+    ORDER BY 'Manager Name';`;
   connection.query(query, (err, res) => {
     if (err) throw err;
     console.table(res);
