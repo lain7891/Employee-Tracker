@@ -24,8 +24,10 @@ WHERE department.id = 1;
 -- View all departments 
 SELECT * FROM department;
 
--- View All Employees by Manager --  
+-- View all roles 
+SELECT * FROM role;
 
+-- View All Employees by Manager --  
 SELECT employee.manager_id AS 'Manager ID', manager.first_name, manager.last_name AS 'Manager Name',
 employee.id AS 'Employee ID', employee.first_name, employee.last_name 'Employee'
 FROM employee employee

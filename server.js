@@ -65,7 +65,7 @@ function promptUser() {
         case "Add Department":
           addDepartment();
           break;
-        case "View all roles":
+        case "View All Roles":
           allRoles();
           break;
         case "View All Departments":
@@ -133,6 +133,14 @@ function employeesByManager() {
   });
 }
 
+
+function allRoles() {
+    connection.query("SELECT * FROM role", (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      promptUser();
+    });
+  }
 function allDepartments() {
   connection.query("SELECT * FROM department;", (err, res) => {
     if (err) throw err;
