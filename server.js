@@ -133,6 +133,35 @@ function employeesByManager() {
   });
 }
 
+function addEmployee(){
+    inquirer.prompt({
+        type: "input",
+        message: "What is the employee's first name?",
+        name: "first_name",
+    },
+    {
+        type: "input",
+        message: "What is the employee's last name?",
+        name: "last_name",
+    },
+    {
+        type: "input",
+        message: "What is the employee's id number",
+        name: "role_id",
+    },
+    {
+        type: "input",
+        message: "What is the employee's manager id",
+        name: "manager_id",
+    }).then((response) => {
+        console.log(response);
+    
+    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id)  VALUES (?, ?, ?, ?)",(err,res) => {
+        if (err) throw err;
+        console.table(res);
+        promptUser();
+    }
+    )})};
 
 function allRoles() {
     connection.query("SELECT * FROM role", (err, res) => {
