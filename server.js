@@ -156,12 +156,38 @@ function addEmployee(){
     }).then((response) => {
         console.log(response);
     
-    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id)  VALUES (?, ?, ?, ?)",(err,res) => {
+    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id)  VALUES (?,?,?,?)",(err,res) => {
         if (err) throw err;
         console.table(res);
         promptUser();
     }
     )})};
+
+    function addRole(){
+        inquirer.prompt({
+            type: "input",
+            message: "What is the employee's title?",
+            name: "title",
+        },
+        {
+            type: "input",
+            message: "What is the employee's salary?",
+            name: "salary",
+        },
+        {
+            type: "input",
+            message: "What is the employee's department id?",
+            name: "department_id",
+        },
+        ).then((response) => {
+            console.log(response);
+        
+        connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",(err,res) => {
+            if (err) throw err;
+            console.table(res);
+            promptUser();
+        }
+        )})};
 
 function allRoles() {
     connection.query("SELECT * FROM role", (err, res) => {
