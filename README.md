@@ -1,5 +1,7 @@
 # Employee-Tracker
 
+![badge](https://img.shields.io/badge/MIT-License-<color>)
+
 For this assignment we were to create and build a solution for managing a company’s employees using node, inquirer and MySQL. This assignment had us create an easy to use interface with stored database.
 
 As a business owner, I want to be able to view and manage the departments, roles and employees in my company so that I can organize and plan my business.
