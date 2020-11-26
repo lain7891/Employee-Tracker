@@ -170,7 +170,7 @@ function addEmployee() {
 
 function addRole() {
   inquirer
-    .prompt(
+    .prompt([
       {
         type: "input",
         message: "What is the employee's title?",
@@ -183,20 +183,20 @@ function addRole() {
       },
       {
         type: "input",
-        message: "What is the employee's manager id?",
-        name: "manager_id",
-      }
-    )
-    .then((response) => {
-      console.log(response);
-
-      connection.query("INSERT INTO employee SET ?", (err, res) => {
-        if (err) throw err;
-        console.log("Successfully added");
-        promptUser();
+        message: "What is the employee's department id?",
+        name: "department_id",
+      },
+    ]) .then((response) => {
+        console.log(response);
+  
+        connection.query(`INSERT INTO role SET ?`, response, (err) => {
+          if (err) throw err;
+          console.log("Successfully added");
+          promptUser();
+        });
       });
-    });
-}
+  }
+
 
 function allRoles() {
   connection.query("SELECT * FROM role", (err, res) => {
