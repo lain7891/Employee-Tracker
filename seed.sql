@@ -34,3 +34,12 @@ FROM employee employee
 INNER JOIN employee manager ON employee.manager_id = manager.id
 WHERE employee.manager_id IS NOT NULL
 ORDER BY 'Manager Name';
+
+DELETE FROM role
+WHERE  employee.id = 13;
+
+DELETE FROM role
+WHERE  role.id = 10;
+
+DELETE FROM department
+WHERE  department.id = 5;
