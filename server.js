@@ -197,6 +197,24 @@ function addRole() {
       });
   }
 
+  function addDepartment() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What is the name of the department?",
+          name: "name",
+        },
+      ]) .then((response) => {
+          console.log(response);
+    
+          connection.query(`INSERT INTO department SET ?`, response, (err) => {
+            if (err) throw err;
+            console.log("Successfully added");
+            promptUser();
+          });
+        });
+    }
 
 function allRoles() {
   connection.query("SELECT * FROM role", (err, res) => {
@@ -212,3 +230,5 @@ function allDepartments() {
     promptUser();
   });
 }
+
+
