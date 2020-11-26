@@ -16,10 +16,12 @@ As a business owner, I want to be able to view and manage the departments, roles
 
 ## Installation
 
-*Created a git repository
+* Created a git repository
 * Installed: init -y, inquirer and MySql
 
 ## Usage
+
+![readme-gif](assets/employee-tracker.gif)
 
 * Node
 * Query Connections
@@ -32,6 +34,8 @@ As a business owner, I want to be able to view and manage the departments, roles
 Created by myself as a homework assignment for Georgia Tech Full-Stack Flex Program.
 
 ## GitHub Link
+
+[GitHub](https://github.com/lain7891/Employee-Tracker)
 
 ## License
 
