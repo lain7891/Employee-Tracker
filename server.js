@@ -133,69 +133,78 @@ function employeesByManager() {
   });
 }
 
-function addEmployee(){
-    inquirer.prompt({
+function addEmployee() {
+  inquirer
+    .prompt([
+      {
         type: "input",
         message: "What is the employee's first name?",
         name: "first_name",
-    },
-    {
+      },
+      {
         type: "input",
         message: "What is the employee's last name?",
         name: "last_name",
-    },
-    {
+      },
+      {
         type: "input",
         message: "What is the employee's id number",
         name: "role_id",
-    },
-    {
+      },
+      {
         type: "input",
         message: "What is the employee's manager id",
         name: "manager_id",
-    }).then((response) => {
-        console.log(response);
-    
-    connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id)  VALUES (?,?,?,?)",(err,res) => {
-        if (err) throw err;
-        console.table(res);
-        promptUser();
-    }
-    )})};
+      },
+    ])
+    .then((response) => {
+      console.log(response);
 
-    function addRole(){
-        inquirer.prompt({
-            type: "input",
-            message: "What is the employee's title?",
-            name: "title",
-        },
-        {
-            type: "input",
-            message: "What is the employee's salary?",
-            name: "salary",
-        },
-        {
-            type: "input",
-            message: "What is the employee's department id?",
-            name: "department_id",
-        },
-        ).then((response) => {
-            console.log(response);
-        
-        connection.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",(err,res) => {
-            if (err) throw err;
-            console.table(res);
-            promptUser();
-        }
-        )})};
+      connection.query(`INSERT INTO employee SET ?`, response, (err, res) => {
+        if (err) throw err;
+        console.log("Successfully added");
+        promptUser();
+      });
+    });
+}
+
+function addRole() {
+  inquirer
+    .prompt(
+      {
+        type: "input",
+        message: "What is the employee's title?",
+        name: "title",
+      },
+      {
+        type: "input",
+        message: "What is the employee's salary?",
+        name: "salary",
+      },
+      {
+        type: "input",
+        message: "What is the employee's manager id?",
+        name: "manager_id",
+      }
+    )
+    .then((response) => {
+      console.log(response);
+
+      connection.query("INSERT INTO employee SET ?", (err, res) => {
+        if (err) throw err;
+        console.log("Successfully added");
+        promptUser();
+      });
+    });
+}
 
 function allRoles() {
-    connection.query("SELECT * FROM role", (err, res) => {
-      if (err) throw err;
-      console.table(res);
-      promptUser();
-    });
-  }
+  connection.query("SELECT * FROM role", (err, res) => {
+    if (err) throw err;
+    console.table(res);
+    promptUser();
+  });
+}
 function allDepartments() {
   connection.query("SELECT * FROM department;", (err, res) => {
     if (err) throw err;
